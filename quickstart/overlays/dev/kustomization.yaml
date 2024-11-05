@@ -1,0 +1,31 @@
+resources: 
+  - ../../base
+# App config custom
+patches:
+  # Patch para o Ingress
+  - path: ./patches/host-patch.yaml
+    target: 
+      kind: Ingress
+      name: goapp-ingress
+  # Patch para o Deployment
+  - path: ./patches/resources-patch.yaml
+    target: 
+      kind: Deployment
+      name: goapp
+  # Patch para o Namespace
+  - path: ./patches/namespace-patch.yaml
+    target: 
+      kind: Deployment
+      name: goapp
+  - path: ./patches/namespace-patch.yaml
+    target: 
+      kind: Ingress
+      name: goapp-ingress
+  - path: ./patches/namespace-patch.yaml
+    target: 
+      kind: Service
+      name: goapp
+  - path: ./patches/namespace-patch.yaml
+    target: 
+      kind: HorizontalPodAutoscaler
+      name: goapp-hpa

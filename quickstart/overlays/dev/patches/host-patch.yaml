@@ -1,0 +1,6 @@
+# quickstart/overlays/dev/patches/host-patch.yaml
+
+# Patch para o Ingress - substituindo o host
+- op: replace
+  path: /spec/rules/0/host
+  value: "dev.goapp.127.0.0.1.nip.io"

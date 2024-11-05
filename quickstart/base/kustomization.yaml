@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- deployment.yaml
+- service.yaml
+- ingress.yaml
+- hpa.yaml
+
+namespace: devopspro
+
+images:
+- name: goapp
+  newName: rampss/argocd
+  newTag: 07e0ed49f303425cd0f1805b03dd28fc3395924d
+
+

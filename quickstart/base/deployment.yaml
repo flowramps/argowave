@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goapp
+  namespace: teste
+spec:
+  selector:
+    matchLabels:
+      app: goapp
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: /metrics
+        prometheus.io/port: "80"
+      labels:
+        app: goapp
+    spec:
+      containers:
+      - name: goapp
+        image: goapp
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: "100m"         # solicita 100 milicores de CPU
+            memory: "128Mi"     # solicita 128 MiB de memória
+          limits:
+            cpu: "500m"         # limite de 500 milicores de CPU
+            memory: "256Mi"     # limite de 256 MiB de memória

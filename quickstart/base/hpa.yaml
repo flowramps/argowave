@@ -1,0 +1,19 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: goapp-hpa
+  namespace: teste
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: goapp
+  minReplicas: 1                 # Número mínimo de réplicas
+  maxReplicas: 5                 # Número máximo de réplicas
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50   # Aumenta as réplicas quando o uso médio de CPU ultrapassa 50%
