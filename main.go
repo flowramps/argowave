@@ -11,6 +11,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
+
 var (
 	instagramClicks = prometheus.NewCounter(prometheus.CounterOpts{
 		Name: "social_media_clicks_instagram",
