@@ -34,4 +34,4 @@ kind: Kustomization
 images:
 - name: goapp
   newName: rampss/argocd
-  newTag: 2cebbd1bc588dc6f0e0a4fa6bcd10d88b4cfe6e7
+  newTag: 307ebf919899c5cd157f951286a36659624e6e51
