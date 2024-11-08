@@ -33,7 +33,7 @@ jobs:
 
       - name: Update K8s Image in Base
         run: |
-          cd base
+          cd quickstart/base
           kustomize edit set image goapp=rampss/argocd:${{ github.sha }}
           cat kustomization.yaml
 
