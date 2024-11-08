@@ -1,31 +1,37 @@
-resources: 
-  - ../../base
+resources:
+- ../../base
 # App config custom
-patches:
   # Patch para o Ingress
-  - path: ./patches/host-patch.yaml
-    target: 
-      kind: Ingress
-      name: goapp-ingress
   # Patch para o Deployment
-  - path: ./patches/resources-patch.yaml
-    target: 
-      kind: Deployment
-      name: goapp
   # Patch para o Namespace
-  - path: ./patches/namespace-patch.yaml
-    target: 
-      kind: Deployment
-      name: goapp
-  - path: ./patches/namespace-patch.yaml
-    target: 
-      kind: Ingress
-      name: goapp-ingress
-  - path: ./patches/namespace-patch.yaml
-    target: 
-      kind: Service
-      name: goapp
-  - path: ./patches/namespace-patch.yaml
-    target: 
-      kind: HorizontalPodAutoscaler
-      name: goapp-hpa
+patches:
+- path: ./patches/host-patch.yaml
+  target:
+    kind: Ingress
+    name: goapp-ingress
+- path: ./patches/resources-patch.yaml
+  target:
+    kind: Deployment
+    name: goapp
+- path: ./patches/namespace-patch.yaml
+  target:
+    kind: Deployment
+    name: goapp
+- path: ./patches/namespace-patch.yaml
+  target:
+    kind: Ingress
+    name: goapp-ingress
+- path: ./patches/namespace-patch.yaml
+  target:
+    kind: Service
+    name: goapp
+- path: ./patches/namespace-patch.yaml
+  target:
+    kind: HorizontalPodAutoscaler
+    name: goapp-hpa
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+images:
+- name: goapp
+  newName: rampss/argocd
+  newTag: 2cebbd1bc588dc6f0e0a4fa6bcd10d88b4cfe6e7
