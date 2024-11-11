@@ -11,4 +11,4 @@ namespace: devopspro
 images:
 - name: goapp
   newName: rampss/argocd
-  newTag: 8a923dda2d10b247895cff4db50d22737ab75190
+  newTag: 53a1409f5601672aa137461147ee964ecdea45ea
