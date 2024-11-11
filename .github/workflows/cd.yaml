@@ -2,10 +2,10 @@ name: CD
 on:
   push:
     branches: [main]
-  workflow_dispatch: # Permite execução manual para rollback
 
 env:
   REPO: rampss/argocd
+  CURRENT_TAG: ${{ github.sha }}
 
 jobs:
   build:
@@ -14,14 +14,23 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
+      
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      
       - name: Build Image and Push to Docker Hub
         uses: docker/build-push-action@v1.1.0
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: ${{ env.REPO }}
-          tags: ${{ github.sha }}, latest
+          tags: ${{ env.CURRENT_TAG }}, latest
+
+      - name: Save Previous Image Tag
+        run: echo "PREVIOUS_TAG=$(docker images --format '{{.Tag}}' | head -n 2 | tail -n 1)" >> $GITHUB_ENV
 
   deploy:
     name: Deploy
@@ -30,12 +39,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      
-      - name: Set Previous Commit SHA
-        id: previous_commit
-        run: |
-          PREV_COMMIT=$(git rev-parse HEAD^)
-          echo "previous_commit=$PREV_COMMIT" >> $GITHUB_ENV
 
       - name: Setup Kustomize
         uses: imranismail/setup-kustomize@v1
@@ -45,14 +48,14 @@ jobs:
       - name: Update K8s Image in Base
         run: |
           cd quickstart/base
-          kustomize edit set image goapp=${{ env.REPO }}:${{ github.sha }}
+          kustomize edit set image goapp=${{ env.REPO }}:${{ env.CURRENT_TAG }}
           cat kustomization.yaml
 
       - name: Commit Changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "Deploy Action"
-          git commit -am "Update image tag to ${{ github.sha }}" || echo "No changes to commit"
+          git commit -am "Update image tag to ${{ env.CURRENT_TAG }}" || echo "No changes to commit"
 
       - name: Push Changes
         uses: ad-m/github-push-action@master
@@ -62,7 +65,7 @@ jobs:
   rollback:
     name: Rollback
     runs-on: ubuntu-latest
-    if: github.event.inputs.rollback == 'true' # Executa apenas se chamado para rollback manualmente
+    if: needs.build.result == 'failure'
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -72,17 +75,17 @@ jobs:
         with:
           kustomize-version: v3.6.1
 
-      - name: Rollback to Previous Commit
+      - name: Rollback Image in K8s
         run: |
           cd quickstart/base
-          kustomize edit set image goapp=${{ env.REPO }}:${{ env.previous_commit }}
+          kustomize edit set image goapp=${{ env.REPO }}:${{ env.PREVIOUS_TAG }}
           cat kustomization.yaml
 
       - name: Commit Rollback Changes
         run: |
           git config --local user.email "action@github.com"
-          git config --local user.name "Deploy Action"
-          git commit -am "Rollback to previous commit ${{ env.previous_commit }}" || echo "No changes to commit"
+          git config --local user.name "Rollback Action"
+          git commit -am "Rollback to previous image tag ${{ env.PREVIOUS_TAG }}" || echo "No changes to commit"
 
       - name: Push Rollback Changes
         uses: ad-m/github-push-action@master
