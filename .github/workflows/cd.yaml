@@ -4,6 +4,9 @@ on:
     branches: [main]
   workflow_dispatch: # Permite execução manual para rollback
 
+env:
+  REPO: rampss/argocd
+
 jobs:
   build:
     name: Build
@@ -15,9 +18,9 @@ jobs:
       - name: Build Image and Push to Docker Hub
         uses: docker/build-push-action@v1.1.0
         with:
-          username: rampss
+          username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: rampss/argocd
+          repository: ${{ env.REPO }}
           tags: ${{ github.sha }}, latest
 
   deploy:
@@ -27,26 +30,22 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      
+      - name: Set Previous Commit SHA
+        id: previous_commit
+        run: |
+          PREV_COMMIT=$(git rev-parse HEAD^)
+          echo "previous_commit=$PREV_COMMIT" >> $GITHUB_ENV
 
       - name: Setup Kustomize
         uses: imranismail/setup-kustomize@v1
         with:
           kustomize-version: v3.6.1
 
-      - name: Read Previous Version
-        id: read_version
-        run: |
-          if test -f VERSION_HISTORY; then
-            export PREVIOUS_VERSION=$(cat VERSION_HISTORY)
-          else
-            export PREVIOUS_VERSION="latest"
-          fi
-          echo "previous_version=$PREVIOUS_VERSION" >> $GITHUB_ENV
-
       - name: Update K8s Image in Base
         run: |
           cd quickstart/base
-          kustomize edit set image goapp=rampss/argocd:${{ github.sha }}
+          kustomize edit set image goapp=${{ env.REPO }}:${{ github.sha }}
           cat kustomization.yaml
 
       - name: Commit Changes
@@ -59,13 +58,6 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.PERSONAL_TOKEN }}
-
-      - name: Update Version History
-        run: |
-          echo "${{ github.sha }}" > VERSION_HISTORY
-          git add VERSION_HISTORY
-          git commit -m "Update version history"
-          git push
 
   rollback:
     name: Rollback
@@ -80,17 +72,17 @@ jobs:
         with:
           kustomize-version: v3.6.1
 
-      - name: Rollback to Previous Version
+      - name: Rollback to Previous Commit
         run: |
           cd quickstart/base
-          kustomize edit set image goapp=rampss/argocd:${{ env.previous_version }}
+          kustomize edit set image goapp=${{ env.REPO }}:${{ env.previous_commit }}
           cat kustomization.yaml
 
       - name: Commit Rollback Changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "Deploy Action"
-          git commit -am "Rollback to previous version ${{ env.previous_version }}" || echo "No changes to commit"
+          git commit -am "Rollback to previous commit ${{ env.previous_commit }}" || echo "No changes to commit"
 
       - name: Push Rollback Changes
         uses: ad-m/github-push-action@master
