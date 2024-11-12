@@ -1,0 +1,20 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: goapp
+  namespace: prometheus
+  labels:
+    app.kubernetes.io/name: goapp
+    app.kubernetes.io/instance: kube-prometheus-stack
+spec:
+  selector:
+    matchLabels:
+      app: goapp
+  namespaceSelector:
+    matchNames:
+      - ls  # Nome do namespace onde o goapp está rodando
+  endpoints:
+    - path: /metrics
+      port: http
+      interval: 30s
+      scheme: http

@@ -3,9 +3,12 @@ kind: Service
 metadata:
   name: goapp
   namespace: teste
+  labels:
+    app: goapp
 spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
   selector:
     app: goapp
-  ports:
-  - port: 8080
-    targetPort: 8080

@@ -1,0 +1,6 @@
+prometheus:
+  prometheusSpec:
+    additionalScrapeConfigs:
+      - job_name: 'goapp'
+        static_configs:
+          - targets: ['goapp:8080']
