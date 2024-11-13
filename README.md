@@ -2,15 +2,16 @@
 ![image](https://github.com/user-attachments/assets/0473d207-c76d-4a25-991b-ff81f0b37a95)
 
 
+### Objetivo
 
 Este repositório foi criado para demonstrar a instalação e configuração do ArgoCD em um ambiente Kubernetes, junto com uma aplicação em Go. Ele é organizado em passos detalhados, cobrindo desde a instalação do ArgoCD usando Helm até a configuração de sincronização automática e controle de versões no GitOps.
 
-Objetivos:
-- 1 - Instalação do ArgoCD: Guiar na instalação e configuração básica do ArgoCD no cluster.
-- 2 - Aplicação Go: Introduzir a aplicação em Go, fornecendo instruções para execução local e integração com o ArgoCD.
-- 3 - GitOps e Primeira Aplicação: Configurar o ArgoCD para gerenciar a aplicação via repositório GitOps.
-- 4 - Sincronização e Monitoramento: Demonstrar o uso do "auto sync" para facilitar o processo de atualização contínua e gerenciamento de mudanças.
+1. **Instalação do ArgoCD:** Guiar na instalação e configuração básica do ArgoCD no cluster.
+2. **Aplicação Go:** Introduzir a aplicação em Go, fornecendo instruções para execução local e integração com o ArgoCD.
+3. **GitOps e Primeira Aplicação:** Configurar o ArgoCD para gerenciar a aplicação via repositório GitOps.
+4. **Sincronização e Monitoramento:** Demonstrar o uso do "auto sync" para facilitar o processo de atualização contínua e gerenciamento de mudanças.
 
+Esse repositório serve como uma referência para implementar práticas de GitOps, utilizando ArgoCD para automação e gestão de deploys em Kubernetes.
 
 
 
@@ -22,7 +23,6 @@ Objetivos:
     - [Configurando uma nova App](#configurando-uma-nova-app)
   - [Passo 05 - Simular alterações com o `auto sync` desabilitado.](#passo-05---simular-alterações-com-o-auto-sync-desabilitado)
   - [Passo 06 - Habilitando `auto sync`](#passo-06---habilitando-auto-sync)
-
 
 
 
