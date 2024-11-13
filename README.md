@@ -1,3 +1,18 @@
+# ArgoCD
+![image](https://github.com/user-attachments/assets/43560fb5-739e-46ba-8b79-dcdb77dd9580)
+
+
+Este repositório foi criado para demonstrar a instalação e configuração do ArgoCD em um ambiente Kubernetes, junto com uma aplicação em Go. Ele é organizado em passos detalhados, cobrindo desde a instalação do ArgoCD usando Helm até a configuração de sincronização automática e controle de versões no GitOps.
+
+Objetivos:
+- 1 - Instalação do ArgoCD: Guiar na instalação e configuração básica do ArgoCD no cluster.
+- 2 - Aplicação Go: Introduzir a aplicação em Go, fornecendo instruções para execução local e integração com o ArgoCD.
+- 3 - GitOps e Primeira Aplicação: Configurar o ArgoCD para gerenciar a aplicação via repositório GitOps.
+- 4 - Sincronização e Monitoramento: Demonstrar o uso do "auto sync" para facilitar o processo de atualização contínua e gerenciamento de mudanças.
+
+
+
+
 - [ArgoCD](#argocd)
   - [Passo 01 - Instalação do ArgoCD](#passo-01---instalação-do-argocd)
   - [Passo 02 - Conhecendo nossa aplicação em Go](#passo-02---conhecendo-nossa-aplicação-em-go)
@@ -8,10 +23,7 @@
   - [Passo 06 - Habilitando `auto sync`](#passo-06---habilitando-auto-sync)
 
 
-#### Documentação do repositório de instalação
-```
-https://artifacthub.io/packages/helm/argo/argo-cd
-```
+
 
 ## Passo 01 - Instalação do ArgoCD
 
@@ -143,6 +155,10 @@ Kustomize
 
 Clique em **Create**
 
+Agora faça o sync, para que o deploy conclua com sucesso 
+![image](https://github.com/user-attachments/assets/a8bfa874-1bb1-4d2c-ada3-3e8c55f9e5d8)
+
+
 
 ## Passo 05 - Simular alterações com o `auto sync` desabilitado.
 
@@ -180,6 +196,8 @@ Ao clicar, irá pedir um ok dizendo, Tem certeza de que deseja habilitar a sincr
 ![image](https://github.com/user-attachments/assets/ca88d5e5-53d3-41e6-9fa4-1b193685e42e)
 
 
+Feito isso, o Auto sync estará ativo e você pode esperar ele fazer o processo automatico ou forçar ele da seguinte forma caso esteja ansioso.
+![image](https://github.com/user-attachments/assets/c62e08f3-c63e-4c4c-92f0-dd3431041153)
 
 
 
