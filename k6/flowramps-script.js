@@ -9,7 +9,7 @@ export let options = {
 
 export default function () {
   // Acesse a página principal da aplicação
-  let response = http.get('http://goapp.172.19.119.209.nip.io/');
+  let response = http.get('http://dev.goapp.127.0.0.1.nip.io/');
 
   // Verifique se a solicitação foi bem-sucedida
   check(response, {
@@ -21,7 +21,7 @@ export default function () {
 
   // Simule cliques nos links de redes sociais
   ['instagram', 'linkedin', 'github'].forEach((network) => {
-    response = http.get(`http://goapp.172.19.119.209.nip.io/click?network=${network}`);
+    response = http.get(`http://dev.goapp.127.0.0.1.nip.io/click?network=${network}`);
 
     // Verifique se a solicitação foi bem-sucedida
     check(response, {

@@ -12,7 +12,7 @@ export let options = {
 
 export default function () {
   // Acesse a página principal da aplicação
-  let response = http.get('http://goapp.127.0.0.1.nip.io/');
+  let response = http.get('http://dev.goapp.127.0.0.1.nip.io/');
 
   // Verifique se a solicitação foi bem-sucedida
   check(response, {
@@ -24,7 +24,7 @@ export default function () {
 
   // Simule cliques nos links de redes sociais
   ['instagram', 'linkedin', 'github'].forEach((network) => {
-    response = http.get(`http://goapp.127.0.0.1.nip.io/increment-${network}-counter`);
+    response = http.get(`http://dev.goapp.127.0.0.1.nip.io/increment-${network}-counter`);
 
     // Verifique se a solicitação foi bem-sucedida
     check(response, {
@@ -36,7 +36,7 @@ export default function () {
   });
 
   // Acesse a página de métricas prometheus
-  response = http.get('http://goapp.127.0.0.1.nip.io/metrics');
+  response = http.get('http://dev.goapp.127.0.0.1.nip.io/metrics');
 
   // Verifique se a solicitação foi bem-sucedida
   check(response, {

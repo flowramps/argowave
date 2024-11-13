@@ -1,1 +1,50 @@
 
+name: CD
+on:
+  push:
+    branches: [main]
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Build Image and Push to Docker Hub
+        uses: docker/build-push-action@v1.1.0
+        with:
+          username: rampss
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: rampss/argocd
+          tags: ${{ github.sha }}, latest     
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Setup Kustomize
+        uses: imranismail/setup-kustomize@v1
+        with:
+          kustomize-version: v3.6.1
+
+      - name: Update K8s Image in Base
+        run: |
+          cd quickstart/base
+          kustomize edit set image goapp=rampss/argocd:${{ github.sha }}
+          cat kustomization.yaml
+
+      - name: Commit Changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "Deploy Action"
+          git commit -am "Update image tag to ${{ github.sha }}" || echo "No changes to commit"
+
+      - name: Push Changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.PERSONAL_TOKEN }}

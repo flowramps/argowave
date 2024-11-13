@@ -6,13 +6,14 @@ metadata:
   labels:
     app.kubernetes.io/name: goapp
     app.kubernetes.io/instance: kube-prometheus-stack
+    release: kube-prometheus-stack
 spec:
   selector:
     matchLabels:
       app: goapp
   namespaceSelector:
     matchNames:
-      - ls  # Nome do namespace onde o goapp está rodando
+      - flowramps  # Nome do namespace onde o goapp está rodando
   endpoints:
     - path: /metrics
       port: http

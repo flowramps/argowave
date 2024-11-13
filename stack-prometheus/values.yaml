@@ -1,6 +1,30 @@
+grafana:
+  adminPassword: admin
+  enabled: true
+  
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    
+    hosts:
+      - grafana.127.0.0.1.nip.io
+   
+    path: /
+
+
 prometheus:
-  prometheusSpec:
-    additionalScrapeConfigs:
-      - job_name: 'goapp'
-        static_configs:
-          - targets: ['goapp:8080']
+  ingress:
+
+    enabled: true
+
+    ingressClassName: nginx
+    annotations: 
+      nginx.ingress.kubernetes.io/rewrite-target: /
+    hosts:
+      - prometheus.127.0.0.1.nip.io
+
+    paths:
+      - /

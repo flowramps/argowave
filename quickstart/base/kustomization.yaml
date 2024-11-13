@@ -5,6 +5,7 @@ resources:
 - service.yaml
 - ingress.yaml
 - hpa.yaml
+- servicemonitor.yaml
 
 namespace: devopspro
 
