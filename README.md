@@ -1,5 +1,6 @@
 # ArgoCD
-![image](https://github.com/user-attachments/assets/43560fb5-739e-46ba-8b79-dcdb77dd9580)
+![image](https://github.com/user-attachments/assets/0473d207-c76d-4a25-991b-ff81f0b37a95)
+
 
 
 Este repositório foi criado para demonstrar a instalação e configuração do ArgoCD em um ambiente Kubernetes, junto com uma aplicação em Go. Ele é organizado em passos detalhados, cobrindo desde a instalação do ArgoCD usando Helm até a configuração de sincronização automática e controle de versões no GitOps.
