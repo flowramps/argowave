@@ -111,3 +111,82 @@ Compile e execute a aplicação Go localmente
 ```
 go run main.go
 ```
+
+## Passo 03 - Conhecendo nosso repositório do GitOps
+
+- Repositório: https://github.com/flowramps/argowave/tree/main/.github/workflows
+
+## Passo 04 - Configurando nossa primeira App no ArgoCD
+
+### Configurando uma nova App
+
+New App
+![image](https://github.com/user-attachments/assets/da3b8c98-df4f-4749-8f80-134e5406e265)
+
+
+General
+![image](https://github.com/user-attachments/assets/7b6f4ad8-664f-48b7-b857-6edb4c32344b)
+
+
+Source
+![image](https://github.com/user-attachments/assets/d4cca8fc-bf48-4e06-ad0b-36d68d7338fe)
+
+
+Destination
+![image](https://github.com/user-attachments/assets/bb4f40a6-7453-4ada-89cc-377802956524)
+
+
+Kustomize
+![image](https://github.com/user-attachments/assets/1d0a8574-42fe-48cf-bdbc-b704e74f6083)
+
+> Para o nosso exemplo acima vou utilizar o `Kustomize`, mas pode ser variado dependendo do fluxo do deploy que você estiver criando, podendo ser helm, kustomize, plugin ...
+
+Clique em **Create**
+
+
+## Passo 05 - Simular alterações com o `auto sync` desabilitado.
+
+- Aumente o número de replicas do deployment
+
+```
+kubectl -n flowramps scale deployment goapp --replicas 5
+```
+> OBS, se estiver utilizando `HPA` como no meu caso, edite o `HPA` para surtir efeito das alterações.
+
+
+
+- Veja o argo OutOfSync
+![image](https://github.com/user-attachments/assets/bd80aa2c-f349-4702-b361-7ae84d425b54)
+
+
+- App Diff
+![image](https://github.com/user-attachments/assets/0417ade8-adaa-4324-9495-08994e1461ae)
+
+
+## Passo 06 - Habilitando `auto sync`
+
+![image](https://github.com/user-attachments/assets/6ed45db3-948f-4876-9bac-d67675853230)
+
+
+![image](https://github.com/user-attachments/assets/580df01d-a635-4a91-bfc1-abbf42ece7b1)
+
+
+![image](https://github.com/user-attachments/assets/32046485-fefa-453e-be61-3a6dbf5b763f)
+
+Role a barra até o final para localizar o `SYN POLICY` e habilite
+![image](https://github.com/user-attachments/assets/e8494bf0-f08f-40b9-89e9-8fdf2d6b1365)
+
+Ao clicar, irá pedir um ok dizendo, Tem certeza de que deseja habilitar a sincronização automatizada de aplicativos?
+![image](https://github.com/user-attachments/assets/ca88d5e5-53d3-41e6-9fa4-1b193685e42e)
+
+
+
+
+
+
+
+
+
+
+
+
