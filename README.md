@@ -49,33 +49,48 @@ http://dev.goapp.127.0.0.1.nip.io
 
 > Usuário padrão é `admin`
 
-#### ArgoCD
+#### ArgoCD via CLI
 
-Login via cli expondo a porta
+- Instuções de instalação doc oficial, necessário para intereção via terminal
+```
+https://kostis-argo-cd.readthedocs.io/en/refresh-docs/getting_started/install_cli/
+```
+- Login via cli expondo a porta
 ```
 argocd login localhost:8080 --username admin --password changeme
 ```
 
-Adicionar repositório git no argocd via cli
+- Exemplos possiveis para login, doc oficial
+```
+https://argo-cd.readthedocs.io/en/stable/user-guide/commands/argocd_login/
+```
+
+- Adicionar repositório git no argocd via cli
 ```
 argocd repo add https://github.com/flowramps/argowave.git --name "argowave" --project testeds --username nonexistant --password changeme --insecure-skip-server-verification --grpc-web --upsert
 ```
 
-```
-argocd app get flow-ramps
-```
-```
-argocd repo list
-```
-Validar projetos 
-```
-kubectl get appprojects -n argocd 
-```
+Listar apps existentes
 ```
 kubectl get app -n argocd
 ```
+Observar informações de uma app especifica 
+```
+argocd app get flow-ramps
+```
 
-Teste fake label
+Listar repositórios 
+```
+argocd repo list
+```
+
+Listar projetos 
+```
+kubectl get appprojects -n argocd 
+```
+
+
+Anotações para testes, label fake
 ```
 kubectl patch configmap argocd-cm -n argocd --type='merge' -p '{"data": {"globalProjects": "- labelSelector:\n    matchExpressions:\n    - key: fake.label\n      operator: DoesNotExist\n  projectName: default"}}'
 ```
@@ -83,15 +98,16 @@ kubectl patch configmap argocd-cm -n argocd --type='merge' -p '{"data": {"global
 kubectl rollout restart deployment argo-cd-argocd-server -n argocd
 ```
 
-#### Go App
+## Passo 02 - Conhecendo nossa aplicação em GO
+
+- Repositório: https://github.com/flowramps/argowave/blob/main/main.go
 
 Instale as dependências
 ```
 go mod download
-
 ```
 
-Compile e execute a aplicação Go
+Compile e execute a aplicação Go localmente
 ```
 go run main.go
 ```
