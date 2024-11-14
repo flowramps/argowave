@@ -190,7 +190,7 @@ func main() {
                         <a href="/metrics" style="text-decoration: none; color: #333;">Metrics</a>
                     </div>
                     <div class="content">
-                        <h1>Live DevOps!!</h1>
+                        <h1>DevOps!!</h1>
                         <div class="image-container">
                             <img class="responsive-image" src="https://raw.githubusercontent.com/flowramps/workshop-argo/main/img/flowramps.jpg" alt="Imagem">
                         </div>
