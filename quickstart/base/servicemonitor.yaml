@@ -13,7 +13,7 @@ spec:
       app: goapp
   namespaceSelector:
     matchNames:
-      - flowramps  # Nome do namespace onde o goapp está rodando
+      - live-devopspro  # Nome do namespace onde o goapp está rodando
   endpoints:
     - path: /metrics
       port: http

@@ -28,3 +28,17 @@ prometheus:
 
     paths:
       - /
+    
+alertmanager:
+  ingress:
+
+    enabled: true
+
+    ingressClassName: nginx
+    annotations: 
+      kubernetes.io/ingress.class: nginx
+    hosts:
+      - alertmanager.127.0.0.1.nip.io
+
+    paths:
+      - /
