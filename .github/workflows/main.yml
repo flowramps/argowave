@@ -1,5 +1,5 @@
 
-name: CD
+name: Meu_WF
 on:
   push:
     branches: [main]
