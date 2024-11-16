@@ -14,9 +14,9 @@ jobs:
       - name: Build Image and Push to Docker Hub
         uses: docker/build-push-action@v1.1.0
         with:
-          username: rampss
+          username: rmsantis
           password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: rampss/argocd
+          repository: rmsantis/argocd
           tags: ${{ github.sha }}, latest     
 
   deploy:
